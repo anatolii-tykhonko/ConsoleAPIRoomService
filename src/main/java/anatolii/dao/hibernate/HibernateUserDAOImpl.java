@@ -17,12 +17,14 @@ public class HibernateUserDAOImpl implements UserDAO {
     public void save(User user) {
         Session session = this.sessionFactory.openSession();
         System.out.println("open session");
-
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
             session.save(user);
             System.out.println("save user");
         /*
         Magic
         */
+        transaction.commit();
         session.close();
     }
 
