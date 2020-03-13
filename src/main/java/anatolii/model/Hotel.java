@@ -1,4 +1,4 @@
-package anatolii.hibernate.model;
+package anatolii.model;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,10 +9,19 @@ public class Hotel {
     private String cityName;
     private List<Room> roomList;
 
-    public Hotel(String hotelName, String cityName, List<Room> roomList) {
+    public Hotel(int id, String hotelName, String cityName, List<Room> roomList) {
+        this.id = id;
         this.hotelName = hotelName;
         this.cityName = cityName;
         this.roomList = roomList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getHotelName() {
@@ -44,13 +53,14 @@ public class Hotel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hotel hotel = (Hotel) o;
-        return Objects.equals(hotelName, hotel.hotelName) &&
+        return id == hotel.id &&
+                Objects.equals(hotelName, hotel.hotelName) &&
                 Objects.equals(cityName, hotel.cityName) &&
                 Objects.equals(roomList, hotel.roomList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hotelName, cityName, roomList);
+        return Objects.hash(id, hotelName, cityName, roomList);
     }
 }

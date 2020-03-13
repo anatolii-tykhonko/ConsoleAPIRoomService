@@ -1,4 +1,4 @@
-package anatolii.hibernate.model;
+package anatolii.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,10 +12,19 @@ public class Room {
     private LocalDate reserveBefore;
     private boolean status;
 
-    public Room(int persons, BigDecimal price, LocalDate availableFrom) {
+    public Room(int id, int persons, BigDecimal price, LocalDate availableFrom) {
+        this.id = id;
         this.persons = persons;
         this.price = price;
         this.availableFrom = availableFrom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPersons() {
