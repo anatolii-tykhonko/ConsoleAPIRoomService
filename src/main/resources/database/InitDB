@@ -1,1 +1,30 @@
-use RoomService;
+USE RoomService;
+CREATE TABLE IF NOT EXISTS Users
+(
+    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    email    VARCHAR(50)  NOT NULL,
+    name     VARCHAR(50)  NOT NULL,
+    surname  VARCHAR(100) NOT NULL,
+    password VARCHAR(50)  NOT NULL
+)
+    ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS Hotels
+(
+    id        BIGINT PRIMARY KEY AUTO_INCREMENT,
+    hotelName VARCHAR(50)  NOT NULL,
+    cityName  VARCHAR(100) NOT NULL
+)
+    ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS Rooms
+(
+    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
+    person        INT     NOT NULL,
+    price         DECIMAL NOT NULL,
+    availableFrom DATE    NOT NULL,
+    id_hotel      BIGINT  NOT NULL,
+    FOREIGN KEY (id_hotel) REFERENCES Hotels (id)
+)
+    ENGINE = InnoDB;
+

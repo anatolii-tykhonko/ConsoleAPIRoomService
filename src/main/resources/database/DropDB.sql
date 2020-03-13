@@ -1,0 +1,2 @@
+DROP DATABASE RoomService;
+CREATE DATABASE RoomService;
