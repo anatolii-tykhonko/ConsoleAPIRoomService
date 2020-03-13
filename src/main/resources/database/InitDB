@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS Rooms
     person        INT     NOT NULL,
     price         DECIMAL NOT NULL,
     availableFrom DATE    NOT NULL,
-    id_hotel      BIGINT  NOT NULL,
+    idx           INT    DEFAULT NULL,
+    id_hotel      BIGINT DEFAULT NULL,
     FOREIGN KEY (id_hotel) REFERENCES Hotels (id)
 )
     ENGINE = InnoDB;

@@ -7,6 +7,6 @@
         <property name="hibernate.connection.password">rootroot</property>
 
         <!--<mapping resource="Room.hbm.xml"/>-->
-        <mapping class="anatolii.model.Room"/>
+        <mapping class="anatolii.model.User"/>
     </session-factory>
 </hibernate-configuration>

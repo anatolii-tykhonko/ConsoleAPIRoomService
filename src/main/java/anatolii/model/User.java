@@ -1,14 +1,25 @@
 package anatolii.model;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table (name = "Users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
-    private List<Room> roomList = new ArrayList<>();
+    //private List<Room> roomList = new ArrayList<>();
+
+    public User(){}
 
     public User(int id, String name, String surname, String email, String password) {
         this.id = id;
@@ -58,13 +69,13 @@ public class User {
         this.password = password;
     }
 
-    public List<Room> getRoomList() {
-        return roomList;
-    }
-
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
-    }
+//    public List<Room> getRoomList() {
+//        return roomList;
+//    }
+//
+//    public void setRoomList(List<Room> roomList) {
+//        this.roomList = roomList;
+//    }
 
     @Override
     public String toString() {
