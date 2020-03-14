@@ -4,12 +4,12 @@ import anatolii.model.User;
 
 import java.util.List;
 
-public interface UserDAO extends GenericDAO<User, Integer> {
+public interface UserDAO extends GenericDAO<User, Long> {
     @Override
     void save(User user);
 
     @Override
-    User get(Integer id);
+    User get(Long id);
 
     @Override
     void remove(User user);

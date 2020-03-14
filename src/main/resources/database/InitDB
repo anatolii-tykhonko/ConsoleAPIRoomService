@@ -29,3 +29,13 @@ CREATE TABLE IF NOT EXISTS Rooms
 )
     ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS Rooms_reserved
+(
+    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
+    reserveFrom   DATE NOT NULL,
+    availableFrom DATE NOT NULL,
+    id_room       BIGINT DEFAULT NULL,
+    idx           INT    DEFAULT NULL,
+    FOREIGN KEY (id_room) REFERENCES Rooms (id)
+)
+    ENGINE = InnoDB;

@@ -1,26 +1,35 @@
 package anatolii.model;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-
+@Entity
+@Table (name = "Hotels")
 public class Hotel {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "hotelName")
     private String hotelName;
+    @Column(name = "cityName")
     private String cityName;
+    @OneToMany(mappedBy = "hotel")
     private List<Room> roomList;
 
-    public Hotel(int id, String hotelName, String cityName, List<Room> roomList) {
+    public Hotel(){}
+
+    public Hotel(Long id, String hotelName, String cityName, List<Room> roomList) {
         this.id = id;
         this.hotelName = hotelName;
         this.cityName = cityName;
         this.roomList = roomList;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,6 +55,15 @@ public class Hotel {
 
     public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", hotelName='" + hotelName + '\'' +
+                ", cityName='" + cityName + '\'' +
+                '}';
     }
 
     @Override

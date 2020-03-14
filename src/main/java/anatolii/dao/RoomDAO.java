@@ -4,12 +4,12 @@ import anatolii.model.Room;
 
 import java.util.List;
 
-public interface RoomDAO extends GenericDAO <Room, Integer> {
+public interface RoomDAO extends GenericDAO <Room, Long> {
     @Override
     void save(Room room);
 
     @Override
-    Room get(Integer id);
+    Room get(Long id);
 
     @Override
     void remove(Room room);

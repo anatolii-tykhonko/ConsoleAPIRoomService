@@ -4,12 +4,12 @@ import anatolii.model.Hotel;
 
 import java.util.List;
 
-public interface HotelDAO extends GenericDAO<Hotel, Integer> {
+public interface HotelDAO extends GenericDAO<Hotel, Long> {
     @Override
     void save(Hotel hotel);
 
     @Override
-    Hotel get(Integer id);
+    Hotel get(Long id);
 
     @Override
     void remove(Hotel hotel);
