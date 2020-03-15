@@ -12,7 +12,7 @@ public class Hotel {
     private String hotelName;
     @Column(name = "cityName")
     private String cityName;
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL )
     private Set<Room> roomList;
 
     public Hotel(){}

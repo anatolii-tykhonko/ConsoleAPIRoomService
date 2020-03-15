@@ -26,7 +26,7 @@ public class Room {
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
     @Column(name ="isReserve")
-    private boolean status;
+    private Boolean status;
 
     public Room() {
     }
@@ -79,11 +79,11 @@ public class Room {
         this.reserveBefore = reserveBefore;
     }
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
