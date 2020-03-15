@@ -15,5 +15,8 @@ public interface HotelDAO extends GenericDAO<Hotel, Long> {
     void remove(Long idl);
 
     @Override
+    void update(Hotel hotel);
+
+    @Override
     List<Hotel> getAll();
 }

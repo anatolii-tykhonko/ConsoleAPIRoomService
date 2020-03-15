@@ -31,6 +31,16 @@ public class HibernateRoomDAOImpl implements RoomDAO {
     }
 
     @Override
+    public void update(Room room) {
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        session.update(room);
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
     public void remove(Long id) {
         Session session = this.sessionFactory.openSession();
         Transaction transaction = session.getTransaction();

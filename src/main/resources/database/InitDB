@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Rooms
     availableFrom DATE    NOT NULL,
     reserveBefore DATE   DEFAULT NULL,
     id_hotel      BIGINT DEFAULT NULL,
-    isAvailable   BOOLEAN NOT NULL,
+    isAvailable   BOOLEAN DEFAULT TRUE,
     id_client       BIGINT DEFAULT NULL,
     FOREIGN KEY (id_hotel) REFERENCES Hotels (id)
 )

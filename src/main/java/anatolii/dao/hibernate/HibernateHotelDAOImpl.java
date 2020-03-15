@@ -31,6 +31,16 @@ public class HibernateHotelDAOImpl implements HotelDAO {
     }
 
     @Override
+    public void update(Hotel hotel) {
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        session.update(hotel);
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
     public void remove(Long id) {
         Session session = this.sessionFactory.openSession();
         Transaction transaction = session.getTransaction();

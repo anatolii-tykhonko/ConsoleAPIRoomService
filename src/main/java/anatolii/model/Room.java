@@ -3,7 +3,6 @@ package anatolii.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -17,9 +16,9 @@ public class Room {
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "availableFrom")
-    private Date availableFrom;
+    private LocalDate availableFrom;
     @Column(name = "reserveBefore")
-    private Date reserveBefore;
+    private LocalDate reserveBefore;
     @ManyToOne
     @JoinColumn(name = "id_hotel", referencedColumnName = "id")
     private Hotel hotel;
@@ -64,19 +63,19 @@ public class Room {
         this.price = price;
     }
 
-    public Date getAvailableFrom() {
+    public LocalDate getAvailableFrom() {
         return availableFrom;
     }
 
-    public void setAvailableFrom(Date availableFrom) {
+    public void setAvailableFrom(LocalDate availableFrom) {
         this.availableFrom = availableFrom;
     }
 
-    public Date getReserveBefore() {
+    public LocalDate getReserveBefore() {
         return reserveBefore;
     }
 
-    public void setReserveBefore(Date reserveBefore) {
+    public void setReserveBefore(LocalDate reserveBefore) {
         this.reserveBefore = reserveBefore;
     }
 

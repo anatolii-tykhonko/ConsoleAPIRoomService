@@ -15,5 +15,8 @@ public interface ClientDAO extends GenericDAO<Client, Long> {
     void remove(Long id);
 
     @Override
+    void update(Client client);
+
+    @Override
     List<Client> getAll();
 }

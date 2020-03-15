@@ -33,6 +33,16 @@ public class HibernateClientDAOImpl implements ClientDAO {
     }
 
     @Override
+    public void update(Client client) {
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        session.update(client);
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
     public void remove(Long id) {
         Session session =this.sessionFactory.openSession();
         Transaction transaction = session.getTransaction();

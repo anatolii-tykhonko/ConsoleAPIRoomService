@@ -15,5 +15,8 @@ public interface RoomDAO extends GenericDAO <Room, Long> {
     void remove(Long id);
 
     @Override
+    void update(Room room);
+
+    @Override
     List<Room> getAll();
 }
