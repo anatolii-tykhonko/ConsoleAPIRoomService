@@ -25,7 +25,7 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
-    @Column(name ="isAvailable")
+    @Column(name ="isReserve")
     private boolean status;
 
     public Room() {
