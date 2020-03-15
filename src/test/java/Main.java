@@ -1,30 +1,20 @@
-import anatolii.dao.HotelDAO;
-import anatolii.dao.RoomDAO;
-import anatolii.dao.UserDAO;
-import anatolii.dao.hibernate.HibernateHotelDAOImpl;
-import anatolii.dao.hibernate.HibernateRoomDAOImpl;
-import anatolii.dao.hibernate.HibernateUserDAOImpl;
-import anatolii.model.Hotel;
-import anatolii.model.Room;
-import anatolii.model.User;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import anatolii.dao.ClientDAO;
+import anatolii.dao.hibernate.HibernateClientDAOImpl;
+import anatolii.model.Client;
 
 public class Main {
     public static void main(String[] args) {
-//        UserDAO userDAO = new HibernateUserDAOImpl();
-//        User userTest = new User();
-//        User userTest2 = new User();
-//        userTest.setEmail("test@gmail.com");
-//        userTest.setName("1testUser");
-//        userTest.setSurname("testSurname");
-//        userTest.setPassword("test");
-//        userDAO.save(userTest);
-//
-        HotelDAO hotelDAO = new HibernateHotelDAOImpl();
-        Hotel hotel = hotelDAO.get(1L);
-        System.out.println(hotel.getRoomList().get(0));
+        ClientDAO clientDAO = new HibernateClientDAOImpl();
+        System.out.println("EXCEPTION");
+        Client clientTest = new Client();
+        clientTest.setName("t");
+        clientTest.setSurname("tt");
+        clientTest.setEmail("t.com");
+        clientTest.setPassword("pas");
+        clientDAO.save(clientTest);
+
+//        HotelDAO hotelDAO = new HibernateHotelDAOImpl();
+//        Hotel hotel = hotelDAO.get(1L);
 
 
 //        RoomDAO roomDAO = new HibernateRoomDAOImpl();

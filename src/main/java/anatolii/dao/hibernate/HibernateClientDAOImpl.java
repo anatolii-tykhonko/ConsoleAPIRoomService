@@ -1,52 +1,54 @@
 package anatolii.dao.hibernate;
 
-import anatolii.dao.RoomDAO;
-import anatolii.model.Room;
+import anatolii.dao.ClientDAO;
+import anatolii.model.Client;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-
 import java.util.List;
 
-public class HibernateRoomDAOImpl implements RoomDAO {
-         private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+
+public class HibernateClientDAOImpl implements ClientDAO {
+
+    SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+
     @Override
-    public void save(Room room) {
+    public void save(Client client) {
         Session session = this.sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
-        session.save(room);
+        session.save(client);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public Room get(Long id) {
+    public Client get(Long id) {
         Session session = this.sessionFactory.openSession();
-        Room room = session.get(Room.class, id);
+        Client client = session.get(Client.class, id);
         session.close();
-        return room;
+        return client;
     }
 
     @Override
     public void remove(Long id) {
-        Session session = this.sessionFactory.openSession();
+        Session session =this.sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
-        Room room = session.get(Room.class, id);
-        session.delete(room);
+        Client client = session.get(Client.class, id);
+        session.remove(client);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public List<Room> getAll() {
+    public List<Client> getAll() {
         Session session = this.sessionFactory.openSession();
-        Query query = session.createQuery("FROM Room");
-        List<Room> rooms = query.list();
+        Query query = session.createQuery("FROM Client");
+        List<Client> clients = query.list();
         session.close();
-        return rooms;
+        return clients;
     }
 }

@@ -4,31 +4,22 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table (name = "Users")
-public class User {
+@Table(name = "Clients")
+public class Client {
+
+    private Long id;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    @OneToMany(mappedBy = "client")
+    private Set<Room> roomList = new HashSet<>();
+
+
+    public Client() {
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "surname")
-    private String surname;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "password")
-    private String password;
-    //private List<Room> roomList = new ArrayList<>();
-
-    public User(){}
-
-    public User(Long id, String name, String surname, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-    }
-
     public Long getId() {
         return id;
     }
@@ -69,11 +60,11 @@ public class User {
         this.password = password;
     }
 
-//    public List<Room> getRoomList() {
+//    public Set<Room> getRoomList() {
 //        return roomList;
 //    }
 //
-//    public void setRoomList(List<Room> roomList) {
+//    public void setRoomList(Set<Room> roomList) {
 //        this.roomList = roomList;
 //    }
 

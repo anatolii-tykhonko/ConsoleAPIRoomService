@@ -12,7 +12,7 @@ public interface RoomDAO extends GenericDAO <Room, Long> {
     Room get(Long id);
 
     @Override
-    void remove(Room room);
+    void remove(Long id);
 
     @Override
     List<Room> getAll();

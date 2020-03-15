@@ -6,6 +6,6 @@ public interface GenericDAO <T, ID> {
 
     void save(T t);
     T get(ID id);
-    void remove(T t);
+    void remove(ID id);
     List<T> getAll();
 }

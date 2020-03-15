@@ -1,5 +1,5 @@
 USE RoomService;
-CREATE TABLE IF NOT EXISTS Users
+CREATE TABLE IF NOT EXISTS Clients
 (
     id       BIGINT PRIMARY KEY AUTO_INCREMENT,
     email    VARCHAR(50)  NOT NULL,
@@ -23,19 +23,10 @@ CREATE TABLE IF NOT EXISTS Rooms
     person        INT     NOT NULL,
     price         DECIMAL NOT NULL,
     availableFrom DATE    NOT NULL,
-    idx           INT    DEFAULT NULL,
+    reserveBefore DATE   DEFAULT NULL,
     id_hotel      BIGINT DEFAULT NULL,
+    isAvailable   BOOLEAN NOT NULL,
+    id_client       BIGINT DEFAULT NULL,
     FOREIGN KEY (id_hotel) REFERENCES Hotels (id)
-)
-    ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS Rooms_reserved
-(
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    reserveFrom   DATE NOT NULL,
-    availableFrom DATE NOT NULL,
-    id_room       BIGINT DEFAULT NULL,
-    idx           INT    DEFAULT NULL,
-    FOREIGN KEY (id_room) REFERENCES Rooms (id)
 )
     ENGINE = InnoDB;

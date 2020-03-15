@@ -12,7 +12,7 @@ public interface HotelDAO extends GenericDAO<Hotel, Long> {
     Hotel get(Long id);
 
     @Override
-    void remove(Hotel hotel);
+    void remove(Long idl);
 
     @Override
     List<Hotel> getAll();

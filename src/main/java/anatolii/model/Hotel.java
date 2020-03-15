@@ -1,8 +1,7 @@
 package anatolii.model;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 @Entity
 @Table (name = "Hotels")
 public class Hotel {
@@ -14,16 +13,9 @@ public class Hotel {
     @Column(name = "cityName")
     private String cityName;
     @OneToMany(mappedBy = "hotel")
-    private List<Room> roomList;
+    private Set<Room> roomList;
 
     public Hotel(){}
-
-    public Hotel(Long id, String hotelName, String cityName, List<Room> roomList) {
-        this.id = id;
-        this.hotelName = hotelName;
-        this.cityName = cityName;
-        this.roomList = roomList;
-    }
 
     public Long getId() {
         return id;
@@ -49,11 +41,11 @@ public class Hotel {
         this.cityName = cityName;
     }
 
-    public List<Room> getRoomList() {
+    public Set<Room> getRoomList() {
         return roomList;
     }
 
-    public void setRoomList(List<Room> roomList) {
+    public void setRoomList(Set<Room> roomList) {
         this.roomList = roomList;
     }
 
