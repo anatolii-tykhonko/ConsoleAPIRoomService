@@ -2,11 +2,14 @@ package anatolii.dao.hibernate;
 
 import anatolii.dao.ClientDAO;
 import anatolii.model.Client;
+import anatolii.model.Room;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -60,5 +63,33 @@ public class HibernateClientDAOImpl implements ClientDAO {
         List<Client> clients = query.list();
         session.close();
         return clients;
+    }
+
+    @Override
+    public void reserveRoom(Long idClient, Long idRoom, LocalDate dateReserve) {
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        Room roomReserve = session.get(Room.class, idRoom);
+        roomReserve.setReserveBefore(dateReserve);
+        roomReserve.setStatus(true);
+        roomReserve.setClient(session.get(Client.class, idClient));
+        session.update(roomReserve);
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
+    public void cancelReserveRoom(Long idRoom) {
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        Room roomUnReserve = session.get(Room.class, idRoom);
+        roomUnReserve.setStatus(false);
+        roomUnReserve.setReserveBefore(null);
+        roomUnReserve.setClient(null);
+        session.update(roomUnReserve);
+        transaction.commit();
+        session.close();
     }
 }

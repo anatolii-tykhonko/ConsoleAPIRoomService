@@ -19,4 +19,8 @@ public interface HotelDAO extends GenericDAO<Hotel, Long> {
 
     @Override
     List<Hotel> getAll();
+
+    List<Hotel> findHotelByName(String hotelName);
+
+    List<Hotel> findHotelByCity(String cityName);
 }

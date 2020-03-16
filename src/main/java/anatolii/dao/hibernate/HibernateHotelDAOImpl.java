@@ -59,4 +59,24 @@ public class HibernateHotelDAOImpl implements HotelDAO {
         session.close();
         return hotels;
     }
+
+    @Override
+    public List<Hotel> findHotelByName(String hotelName) {
+        Session session = this.sessionFactory.openSession();
+        Query query = session.createQuery("FROM Hotel h WHERE h.hotelName = :hotelName");
+        query.setParameter("hotelName", hotelName);
+        List<Hotel> hotelsName = query.list();
+        session.close();
+        return hotelsName;
+    }
+
+    @Override
+    public List<Hotel> findHotelByCity(String cityName) {
+        Session session = this.sessionFactory.openSession();
+        Query query = session.createQuery("FROM Hotel h WHERE h.cityName = :cityName");
+        query.setParameter("cityName", cityName);
+        List<Hotel> hotelsByCity = query.list();
+        session.close();
+        return hotelsByCity;
+    }
 }

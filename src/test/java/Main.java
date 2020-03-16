@@ -15,12 +15,15 @@ import java.util.Date;
 public class Main {
     public static void main(String[] args) {
         ClientDAO clientDAO = new HibernateClientDAOImpl();
+//        System.out.println(clientDAO.getAll());
 //        Client clientTest = new Client();
 //        clientTest.setName("t");
 //        clientTest.setSurname("tt");
 //        clientTest.setEmail("t.com");
 //        clientTest.setPassword("pas");
 //        clientDAO.save(clientTest);
+//        clientDAO.reserveRoom(1L, 1L, LocalDate.of(2020, 04, 04));
+        clientDAO.cancelReserveRoom(1L);
 
         HotelDAO hotelDAO = new HibernateHotelDAOImpl();
 //        hotelDAO.remove(3L);
@@ -29,6 +32,7 @@ public class Main {
 //        hotel.setHotelName("Star");
 //        hotelDAO.save(hotel);
 //        hotel = hotelDAO.get(1L);
+//        System.out.println(hotelDAO.findHotelByCity("Kiev"));
 
         RoomDAO roomDAO = new HibernateRoomDAOImpl();
 //        roomDAO.remove(2L);
@@ -47,7 +51,7 @@ public class Main {
 //        roomTest.setClient(clientDAO.get(4L));
 //        roomDAO.update(roomTest);
 //        roomDAO.remove(4L);
-        clientDAO.remove(4L);
+//        clientDAO.remove(4L);
 
     }
 }

@@ -6,20 +6,20 @@ import java.util.*;
 @Entity
 @Table(name = "Clients")
 public class Client {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String surname;
     private String email;
     private String password;
     @OneToMany(mappedBy = "client")
-    private List<Room> roomList;
+    private Set<Room> roomList = new HashSet<>();
 
 
     public Client() {
     }
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public Long getId() {
         return id;
     }
@@ -60,11 +60,11 @@ public class Client {
         this.password = password;
     }
 
-    public List<Room> getRoomList() {
+    public Set<Room> getRoomList() {
         return roomList;
     }
 
-    public void setRoomList(List<Room> roomList) {
+    public void setRoomList(Set<Room> roomList) {
         this.roomList = roomList;
     }
 
