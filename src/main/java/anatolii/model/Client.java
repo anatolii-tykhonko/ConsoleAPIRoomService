@@ -13,7 +13,7 @@ public class Client {
     private String email;
     private String password;
     @OneToMany(mappedBy = "client")
-    private Set<Room> roomList = new HashSet<>();
+    private List<Room> roomList;
 
 
     public Client() {
@@ -60,13 +60,13 @@ public class Client {
         this.password = password;
     }
 
-//    public Set<Room> getRoomList() {
-//        return roomList;
-//    }
-//
-//    public void setRoomList(Set<Room> roomList) {
-//        this.roomList = roomList;
-//    }
+    public List<Room> getRoomList() {
+        return roomList;
+    }
+
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
+    }
 
     @Override
     public String toString() {

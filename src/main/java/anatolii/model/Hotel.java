@@ -12,8 +12,8 @@ public class Hotel {
     private String hotelName;
     @Column(name = "cityName")
     private String cityName;
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL )
-    private Set<Room> roomList;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Room> roomList;
 
     public Hotel(){}
 
@@ -41,11 +41,11 @@ public class Hotel {
         this.cityName = cityName;
     }
 
-    public Set<Room> getRoomList() {
+    public List<Room> getRoomList() {
         return roomList;
     }
 
-    public void setRoomList(Set<Room> roomList) {
+    public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
     }
 

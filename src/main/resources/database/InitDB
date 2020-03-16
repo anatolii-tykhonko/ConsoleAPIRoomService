@@ -23,10 +23,11 @@ CREATE TABLE IF NOT EXISTS Rooms
     person        INT     NOT NULL,
     price         DECIMAL NOT NULL,
     availableFrom DATE    NOT NULL,
-    reserveBefore DATE   DEFAULT NULL,
-    id_hotel      BIGINT DEFAULT NULL,
-    isReserve   BOOLEAN DEFAULT FALSE,
-    id_client       BIGINT DEFAULT NULL,
-    FOREIGN KEY (id_hotel) REFERENCES Hotels (id)
+    reserveBefore DATE    DEFAULT NULL,
+    id_hotel      BIGINT  DEFAULT NULL,
+    isReserve     BOOLEAN DEFAULT FALSE,
+    id_client     BIGINT  DEFAULT NULL,
+    FOREIGN KEY (id_hotel) REFERENCES Hotels (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_client) REFERENCES Clients (id) ON DELETE SET NULL
 )
     ENGINE = InnoDB;

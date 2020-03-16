@@ -12,7 +12,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "person")
-    private int persons;
+    private Integer persons;
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "availableFrom")
@@ -47,11 +47,11 @@ public class Room {
         this.id = id;
     }
 
-    public int getPersons() {
+    public Integer getPersons() {
         return persons;
     }
 
-    public void setPersons(int persons) {
+    public void setPersons(Integer persons) {
         this.persons = persons;
     }
 

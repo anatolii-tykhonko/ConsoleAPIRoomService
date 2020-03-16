@@ -43,7 +43,7 @@ VALUES (null, 4, 380, '2020-04-29', null, 3, FALSE, null);
 INSERT INTO Rooms
 VALUES (null, 3, 310, '2020-04-11', null, 4, FALSE, null);
 INSERT INTO Rooms
-VALUES (null, 1, 100, '2020-06-01', null, 5, FALSE, null);
+VALUES (null, 1, 100, '2020-12-31', '2021-01-01', 5, TRUE, 2);
 INSERT INTO Rooms
 VALUES (null, 4, 800, '2020-06-20', null, 6, FALSE, null);
 
