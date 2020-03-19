@@ -16,6 +16,8 @@ public class Main {
     public static void main(String[] args) {
         ClientDAO clientDAO = new HibernateClientDAOImpl();
 //        System.out.println(clientDAO.getAll());
+        Client client = clientDAO.getByEmail("zzz@gmail.com");
+        System.out.println(client);
 //        Client clientTest = new Client();
 //        clientTest.setName("t");
 //        clientTest.setSurname("tt");
@@ -23,7 +25,7 @@ public class Main {
 //        clientTest.setPassword("pas");
 //        clientDAO.save(clientTest);
 //        clientDAO.reserveRoom(1L, 1L, LocalDate.of(2020, 04, 04));
-        clientDAO.cancelReserveRoom(1L);
+//        clientDAO.cancelReserveRoom(1L);
 
         HotelDAO hotelDAO = new HibernateHotelDAOImpl();
 //        hotelDAO.remove(3L);

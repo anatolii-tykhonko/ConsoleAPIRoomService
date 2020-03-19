@@ -12,6 +12,8 @@ public interface ClientDAO extends GenericDAO<Client, Long> {
     @Override
     Client get(Long id);
 
+    Client getByEmail(String email);
+
     @Override
     void remove(Long id);
 

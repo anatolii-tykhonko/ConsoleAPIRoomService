@@ -36,6 +36,17 @@ public class HibernateClientDAOImpl implements ClientDAO {
     }
 
     @Override
+    public Client getByEmail(String email) {
+        Session session = this.sessionFactory.openSession();
+        Client client;
+        Query query = session.createQuery("FROM Client c WHERE c.email = :email");
+        query.setParameter("email", email);
+        client = (Client) query.list().get(0);
+        session.close();
+        return client;
+    }
+
+    @Override
     public void update(Client client) {
         Session session = this.sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
