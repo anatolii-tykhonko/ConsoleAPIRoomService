@@ -2,8 +2,7 @@ package anatolii.controller;
 
 import anatolii.dao.HotelDAO;
 import anatolii.dao.RoomDAO;
-import anatolii.dao.hibernate.HibernateHotelDAOImpl;
-import anatolii.dao.hibernate.HibernateRoomDAOImpl;
+import anatolii.exception.NotFoundEntityForThisCriteria;
 import anatolii.model.Hotel;
 import anatolii.model.Room;
 
@@ -20,20 +19,30 @@ public class RoomControllerImpl implements RoomController {
         this.hotelDAO = hotelDAO;
     }
     @Override
-    public void addRoom(String hotelName, Integer person, BigDecimal price, String date) {
+    public void addRoom(String hotelName, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
         Room room = new Room();
-        room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
+        try {
+            room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
+        } catch (IndexOutOfBoundsException e){
+            throw new NotFoundEntityForThisCriteria("Отель с таким названием отсутствует в списке.\n");
+        }
         room.setPersons(person);
         room.setPrice(price);
         room.setAvailableFrom(LocalDate.parse(date));
         roomDAO.save(room);
-
     }
 
     @Override
-    public void editRoomDetails(Long roomId, String hotelName, Integer person, BigDecimal price, String date) {
+    public void editRoomDetails(Long roomId, String hotelName, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
         Room room = roomDAO.get(roomId);
-        room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
+        if(room == null){
+            throw new NotFoundEntityForThisCriteria("Комната с даным ID отсутствует в списке.\n");
+        }
+        try {
+            room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
+        } catch (IndexOutOfBoundsException e){
+            throw new NotFoundEntityForThisCriteria("Отель с таким названием отсутствует в списке.\n");
+        }
         room.setPersons(person);
         room.setPrice(price);
         room.setAvailableFrom(LocalDate.parse(date));
@@ -46,8 +55,16 @@ public class RoomControllerImpl implements RoomController {
     }
 
     @Override
-    public List<Hotel> findRoomByHotel(String hotelName) {
-        List<Hotel> hotelList = hotelDAO.findHotelByName(hotelName);
+    public List<Hotel> findRoomByHotel(String hotelName) throws NotFoundEntityForThisCriteria {
+        List<Hotel> hotelList;
+        try {
+            hotelList = hotelDAO.findHotelByName(hotelName);
+        } catch (IndexOutOfBoundsException e){
+            throw new NotFoundEntityForThisCriteria("Отель с таким названием отсутствует в списке.\n");
+        }
+        if(hotelList.isEmpty()){
+            throw new NotFoundEntityForThisCriteria("В даном отеле свободные комнаты отсутствуют.\n");
+        } else System.out.println("По Вашему запросу найдены следующие комнаты: ");
         return hotelList;
     }
 }

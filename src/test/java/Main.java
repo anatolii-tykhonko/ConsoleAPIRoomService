@@ -9,6 +9,7 @@ import anatolii.dao.hibernate.HibernateClientDAOImpl;
 import anatolii.dao.hibernate.HibernateHotelDAOImpl;
 import anatolii.dao.hibernate.HibernateRoomDAOImpl;
 import anatolii.exception.HotelAlreadyExist;
+import anatolii.model.Room;
 
 public class Main {
     public static void main(String[] args) {
@@ -41,7 +42,9 @@ public class Main {
 //        roomTest.setPrice(new BigDecimal(5000));
 //        roomTest.setAvailableFrom(LocalDate.of(2020,12,31));
 //        roomDAO.save(roomTest);
-//        Room roomTest= roomDAO.get(5L);
+//        Room roomTest= roomDAO.get(100L);
+//        System.out.println(roomTest);
+//
 //        roomTest.setHotel(hotel);
 //        roomTest.setReserveBefore(LocalDate.of(2021,01,02));
 //        roomTest.setStatus(true);
