@@ -2,6 +2,7 @@ package anatolii.dao;
 
 import anatolii.model.Client;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 

@@ -2,7 +2,12 @@ package anatolii.controller;
 
 import anatolii.dao.ClientDAO;
 import anatolii.dao.RoomDAO;
+import anatolii.exceprion.ClientAlreadyExist;
+import anatolii.exceprion.IncorrectEmail;
+import anatolii.exceprion.IncorrectPassword;
+import anatolii.exceprion.InvalidRoomStatus;
 import anatolii.model.Client;
+import anatolii.model.Room;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,39 +22,55 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public void registerClient(String name, String surname, String email, String password) {
-        Client client = new Client();
-        client.setName(name);
-        client.setSurname(surname);
-        client.setEmail(email);
-        client.setPassword(password);
-        clientDAO.save(client);
+    public void registerClient(String name, String surname, String email, String password) throws ClientAlreadyExist {
+        if (!email.equals(clientDAO.getByEmail("email"))) {
+            Client client = new Client();
+            client.setName(name);
+            client.setSurname(surname);
+            client.setEmail(email);
+            client.setPassword(password);
+            clientDAO.save(client);
+        } else throw new ClientAlreadyExist("Клиент с таким email уже существует! Повторите ввод!\n");
     }
 
     @Override
-    public void editClientInfo(String oldEmail, String newSurname, String newName) {
-        Client client = clientDAO.getByEmail(oldEmail);
-        client.setName(newName);
+    public void editClientInfo(String oldEmail, String newSurname, String newName) throws IncorrectEmail {
+        Client client;
+        try {
+            client = clientDAO.getByEmail(oldEmail);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
+        }
         client.setSurname(newSurname);
+        client.setName(newName);
         clientDAO.update(client);
     }
 
     @Override
-    public void deleteClient(String email, String password) {
-        Client client = clientDAO.getByEmail(email);
-        if(password.equals(client.getPassword())) {
+    public void deleteClient(String email, String password) throws IncorrectEmail {
+        Client client;
+        try {
+            client = clientDAO.getByEmail(email);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
+        }
+        if (password.equals(client.getPassword())) {
             Long id = client.getId();
             clientDAO.remove(id);
         }
     }
 
     @Override
-    public void reserveRoom(Long idClient, Long idRoom, String reserveDate) {
-        String[] dataString = reserveDate.split(".");
-        LocalDate date = LocalDate.of(Integer.parseInt(dataString[2]),
-                                        Integer.parseInt(dataString[1]),
-                                        Integer.parseInt(dataString[0]));
-        clientDAO.reserveRoom(idClient, idRoom, date);
+    public void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus {
+        Room room = roomDAO.get(idRoom);
+        //default value set false
+        if(room.getStatus()){
+            throw new InvalidRoomStatus("Эта комната сейчас занята.\n");
+        }
+        LocalDate reserve = room.getAvailableFrom();
+        if(reserve.compareTo(LocalDate.parse(reserveDate)) <= 0){
+            clientDAO.reserveRoom(idClient, idRoom, LocalDate.parse(reserveDate));
+        } else throw new InvalidRoomStatus("На данную дату комната занята.\n");
     }
 
     @Override
@@ -58,9 +79,16 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public boolean loginClient(String email, String password) {
-        Client client = clientDAO.getByEmail(email);
-        return password.equals(client.getPassword());
+    public boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword {
+        Client client;
+        try {
+            client = clientDAO.getByEmail(email);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
+        }
+        if (client.getPassword().equals(password)) {
+            return true;
+        } else throw new IncorrectPassword("Не верный пароль! Повторите ввод!\n");
     }
 
     @Override
@@ -70,8 +98,13 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public Client getCurrentClient(String email) {
-        Client client = clientDAO.getByEmail(email);
+    public Client getCurrentClient(String email) throws IncorrectEmail {
+        Client client;
+        try {
+            client = clientDAO.getByEmail(email);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
+        }
         return client;
     }
 }

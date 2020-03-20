@@ -51,8 +51,8 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
-    public List<Hotel> findHotelByCity(String citylName) {
-        List<Hotel> hotels = hotelDAO.findHotelByCity(citylName);
+    public List<Hotel> findHotelByCity(String cityName) {
+        List<Hotel> hotels = hotelDAO.findHotelByCity(cityName);
         return hotels;
     }
 

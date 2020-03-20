@@ -10,7 +10,7 @@ public interface HotelController {
     void editHotelDetails(Long id, String hotelName, String cityName, Room ... room);
     void deleteHotel(Long id);
     List<Hotel> findHotelByName(String hotelName);
-    List<Hotel> findHotelByCity(String citylName);
+    List<Hotel> findHotelByCity(String cityName);
     List<Hotel> getHotels();
 
 }

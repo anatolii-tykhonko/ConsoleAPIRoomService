@@ -20,23 +20,23 @@ public class RoomControllerImpl implements RoomController {
         this.hotelDAO = hotelDAO;
     }
     @Override
-    public void addRoom(String hotelName, Integer person, BigDecimal price, LocalDate date) {
+    public void addRoom(String hotelName, Integer person, BigDecimal price, String date) {
         Room room = new Room();
         room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
         room.setPersons(person);
         room.setPrice(price);
-        room.setAvailableFrom(date);
+        room.setAvailableFrom(LocalDate.parse(date));
         roomDAO.save(room);
 
     }
 
     @Override
-    public void editRoomDetails(Long roomId, String hotelName, Integer person, BigDecimal price, LocalDate date) {
+    public void editRoomDetails(Long roomId, String hotelName, Integer person, BigDecimal price, String date) {
         Room room = roomDAO.get(roomId);
         room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
         room.setPersons(person);
         room.setPrice(price);
-        room.setAvailableFrom(date);
+        room.setAvailableFrom(LocalDate.parse(date));
         roomDAO.update(room);
     }
 

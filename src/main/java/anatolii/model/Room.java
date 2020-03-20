@@ -79,7 +79,7 @@ public class Room {
         this.reserveBefore = reserveBefore;
     }
 
-    public Boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 

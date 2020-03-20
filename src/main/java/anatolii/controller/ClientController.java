@@ -1,18 +1,22 @@
 package anatolii.controller;
 
+import anatolii.exceprion.ClientAlreadyExist;
+import anatolii.exceprion.IncorrectEmail;
+import anatolii.exceprion.IncorrectPassword;
+import anatolii.exceprion.InvalidRoomStatus;
 import anatolii.model.Client;
 
 import java.util.List;
 
 public interface ClientController {
-    void registerClient(String name, String surname, String email, String password);
-    void editClientInfo(String oldEmail, String newSurname, String newName);
-    void deleteClient(String email, String password);
-    void reserveRoom(Long idClient, Long idRoom, String reserveDate);
+    void registerClient(String name, String surname, String email, String password) throws ClientAlreadyExist;
+    void editClientInfo(String oldEmail, String newSurname, String newName) throws IncorrectEmail;
+    void deleteClient(String email, String password) throws IncorrectEmail;
+    void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus;
     void cancelReserveRoom(Long idRoom);
-    boolean loginClient(String email, String password);
+    boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword;
     List<Client> getAllClient();
-    Client getCurrentClient(String email);
+    Client getCurrentClient(String email) throws IncorrectEmail;
 
 
 }
