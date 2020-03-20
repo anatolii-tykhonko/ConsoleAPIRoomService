@@ -1,9 +1,9 @@
 package anatolii.controller;
 
-import anatolii.exceprion.ClientAlreadyExist;
-import anatolii.exceprion.IncorrectEmail;
-import anatolii.exceprion.IncorrectPassword;
-import anatolii.exceprion.InvalidRoomStatus;
+import anatolii.exception.ClientAlreadyExist;
+import anatolii.exception.IncorrectEmail;
+import anatolii.exception.IncorrectPassword;
+import anatolii.exception.InvalidRoomStatus;
 import anatolii.model.Client;
 
 import java.util.List;

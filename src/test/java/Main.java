@@ -1,21 +1,14 @@
 import anatolii.controller.ClientController;
 import anatolii.controller.ClientControllerImpl;
+import anatolii.controller.HotelController;
+import anatolii.controller.HotelControllerImpl;
 import anatolii.dao.ClientDAO;
 import anatolii.dao.HotelDAO;
 import anatolii.dao.RoomDAO;
 import anatolii.dao.hibernate.HibernateClientDAOImpl;
 import anatolii.dao.hibernate.HibernateHotelDAOImpl;
 import anatolii.dao.hibernate.HibernateRoomDAOImpl;
-import anatolii.exceprion.IncorrectEmail;
-import anatolii.exceprion.IncorrectPassword;
-import anatolii.model.Client;
-import anatolii.model.Hotel;
-import anatolii.model.Room;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Date;
+import anatolii.exception.HotelAlreadyExist;
 
 public class Main {
     public static void main(String[] args) {
@@ -60,14 +53,11 @@ public class Main {
 //        roomDAO.remove(4L);
 //        clientDAO.remove(4L);
 
-        ClientController clientController = new ClientControllerImpl(new HibernateClientDAOImpl());
-//        System.out.println(clientController.getCurrentClient("zzz@gmail.com").getPassword());
+//        HotelController hotelController = new HotelControllerImpl(new HibernateHotelDAOImpl());
 //        try {
-//            clientController.loginClient("zzz@gmail.com", clientController.getCurrentClient("zzz@gmail.com").getPassword());
-//            System.out.println("Login");
-//        } catch (IncorrectEmail | IncorrectPassword incorrect) {
-//            System.out.println(incorrect.getMessage());
+//            hotelController.addHotel("Smoke", "Lviv");
+//        } catch (HotelAlreadyExist hotelAlreadyExist) {
+//            System.out.println(hotelAlreadyExist.getMessage());
 //        }
-
     }
 }

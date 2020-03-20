@@ -2,10 +2,10 @@ package anatolii.controller;
 
 import anatolii.dao.ClientDAO;
 import anatolii.dao.RoomDAO;
-import anatolii.exceprion.ClientAlreadyExist;
-import anatolii.exceprion.IncorrectEmail;
-import anatolii.exceprion.IncorrectPassword;
-import anatolii.exceprion.InvalidRoomStatus;
+import anatolii.exception.ClientAlreadyExist;
+import anatolii.exception.IncorrectEmail;
+import anatolii.exception.IncorrectPassword;
+import anatolii.exception.InvalidRoomStatus;
 import anatolii.model.Client;
 import anatolii.model.Room;
 

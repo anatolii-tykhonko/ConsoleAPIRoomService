@@ -1,4 +1,4 @@
-package anatolii.exceprion;
+package anatolii.exception;
 
 public class AppExeption extends Exception {
     String message;

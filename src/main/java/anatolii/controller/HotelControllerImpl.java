@@ -1,12 +1,15 @@
 package anatolii.controller;
 
 import anatolii.dao.HotelDAO;
+import anatolii.exception.HotelAlreadyExist;
+import anatolii.exception.NotFoundEntityForThisCriteria;
 import anatolii.model.Hotel;
 import anatolii.model.Room;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HotelControllerImpl implements HotelController {
 
@@ -17,7 +20,12 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
-    public void addHotel(String hotelName, String cityName) {
+    public void addHotel(String hotelName, String cityName) throws HotelAlreadyExist {
+        List<Hotel> hotels = hotelDAO.findHotelByName(hotelName).stream().
+                filter(hotel -> hotel.getCityName().equals(cityName)).collect(Collectors.toList());
+        if(!hotels.isEmpty()){
+            throw new HotelAlreadyExist("Отель с таким названием присутствует в даном городе.\n");
+        }
         Hotel hotel = new Hotel();
         hotel.setHotelName(hotelName);
         hotel.setCityName(cityName);
@@ -45,14 +53,20 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
-    public List<Hotel> findHotelByName(String hotelName) {
+    public List<Hotel> findHotelByName(String hotelName) throws NotFoundEntityForThisCriteria {
         List<Hotel> hotels = hotelDAO.findHotelByName(hotelName);
+        if(hotels.isEmpty()){
+            throw new NotFoundEntityForThisCriteria("По Вашему запросу найдены отели не найдены.\n");
+        } else System.out.println("По Вашему запросу найдены следующие отели: ");
         return hotels;
     }
 
     @Override
-    public List<Hotel> findHotelByCity(String cityName) {
+    public List<Hotel> findHotelByCity(String cityName) throws NotFoundEntityForThisCriteria {
         List<Hotel> hotels = hotelDAO.findHotelByCity(cityName);
+        if(hotels.isEmpty()){
+            throw new NotFoundEntityForThisCriteria("По Вашему запросу найдены отели не найдены.\n");
+        } else System.out.println("По Вашему запросу найдены следующие отели: ");
         return hotels;
     }
 
