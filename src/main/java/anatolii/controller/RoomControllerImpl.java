@@ -19,12 +19,12 @@ public class RoomControllerImpl implements RoomController {
         this.hotelDAO = hotelDAO;
     }
     @Override
-    public void addRoom(String hotelName, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
+    public void addRoom(Long hotelId, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
         Room room = new Room();
         try {
-            room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
+            room.setHotel(hotelDAO.get(hotelId));
         } catch (IndexOutOfBoundsException e){
-            throw new NotFoundEntityForThisCriteria("Отель с таким названием отсутствует в списке.\n");
+            throw new NotFoundEntityForThisCriteria("Отель отсутствует в списке.\n");
         }
         room.setPersons(person);
         room.setPrice(price);
@@ -33,15 +33,10 @@ public class RoomControllerImpl implements RoomController {
     }
 
     @Override
-    public void editRoomDetails(Long roomId, String hotelName, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
+    public void editRoomDetails(Long roomId, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
         Room room = roomDAO.get(roomId);
         if(room == null){
             throw new NotFoundEntityForThisCriteria("Комната с даным ID отсутствует в списке.\n");
-        }
-        try {
-            room.setHotel(hotelDAO.findHotelByName(hotelName).get(0));
-        } catch (IndexOutOfBoundsException e){
-            throw new NotFoundEntityForThisCriteria("Отель с таким названием отсутствует в списке.\n");
         }
         room.setPersons(person);
         room.setPrice(price);
