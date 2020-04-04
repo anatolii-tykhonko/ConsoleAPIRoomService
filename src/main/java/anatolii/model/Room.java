@@ -97,7 +97,8 @@ public class Room {
 
     @Override
     public String toString() {
-        return "К-тво спальных мест: " + persons +
+        return  "Номер комнаты: " + id +
+                ", К-тво спальных мест: " + persons +
                 ", цена: " + price +
                 ", " + (status ? "забронирована с: " + availableFrom + " по " + reserveBefore : "свободна с: " + availableFrom);
 

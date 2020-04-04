@@ -70,7 +70,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return  "Имя: " + name +
+        return  "Номер клиента: " + id +
+                ", Имя: " + name +
                 ", фамилия: " + surname +
                 ", email: " + email;
     }

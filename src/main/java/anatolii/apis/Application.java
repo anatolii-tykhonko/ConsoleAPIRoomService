@@ -10,12 +10,14 @@ import anatolii.model.Room;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Application implements API {
-
+    private Client currentClient;
     private ClientController clientController;
     private HotelController hotelController;
     private RoomController roomController;
@@ -27,8 +29,14 @@ public class Application implements API {
     }
 
     @Override
+    public Client getClientById(Long id) throws IncorrectEmail {
+        return clientController.getClientById(id);
+    }
+
+    @Override
     public void registerClient(String name, String surname, String email, String password) throws ClientAlreadyExist {
         clientController.registerClient(name, surname, email, password);
+        currentClient = clientController.getAllClient().stream().filter(email::equals).findFirst().get();
     }
 
     @Override
@@ -37,23 +45,32 @@ public class Application implements API {
     }
 
     @Override
-    public void deleteClient(String email, String password) throws IncorrectEmail {
-        clientController.deleteClient(email, password);
+    public void deleteClient(String email) throws IncorrectEmail {
+        clientController.deleteClient(email);
     }
 
     @Override
-    public void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus {
-        clientController.reserveRoom(idClient, idRoom, reserveDate);
+    public void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus, DateParseException {
+        LocalDate localDate;
+        try {
+            localDate = LocalDate.parse(reserveDate);
+        }catch (Exception e){
+            throw new DateParseException("Неверный формат ввода даты.\n");
+        }
+        clientController.reserveRoom(idClient, idRoom, localDate);
     }
 
     @Override
-    public void cancelReserveRoom(Long idRoom) {
+    public boolean cancelReserveRoom(Long idRoom) {
         clientController.cancelReserveRoom(idRoom);
+        return true;
     }
 
     @Override
     public boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword {
-        return clientController.loginClient(email, password);
+        boolean resultLogin = clientController.loginClient(email, password);
+        currentClient = clientController.getAllClient().stream().filter(email::equals).findFirst().get();
+        return resultLogin;
     }
 
     @Override
@@ -62,8 +79,8 @@ public class Application implements API {
     }
 
     @Override
-    public Client getCurrentClient(Long id) throws IncorrectEmail {
-        return clientController.getCurrentClient(id);
+    public Client getCurrentClient() {
+        return currentClient;
     }
 
     @Override
@@ -146,6 +163,13 @@ public class Application implements API {
         }
         hotel.getRoomList().stream().forEach(System.out::println);
         return true;
+    }
+
+    @Override
+    public void showCityNames() throws NotFoundEntityForThisCriteria {
+        Set<String> allCity = new HashSet<>();
+        hotelController.getHotels().stream().forEach(hotel -> allCity.add(hotel.getCityName()));
+        allCity.forEach(System.out::println);
     }
 
     public void validLine(String line) throws ValidStringNameException {

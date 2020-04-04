@@ -51,9 +51,9 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return "ID= " + id +
-                ", hotelName='" + hotelName + '\'' +
-                ", cityName='" + cityName + '\'';
+        return "ID = " + id +
+                ", название отеля: '" + hotelName + '\'' +
+                ", в городе: '" + cityName + '\'';
     }
 
     @Override

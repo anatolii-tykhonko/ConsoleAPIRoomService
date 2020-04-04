@@ -9,21 +9,24 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface API {
+
+    Client getClientById(Long id) throws IncorrectEmail;
+
     void registerClient(String name, String surname, String email, String password) throws ClientAlreadyExist;
 
     void editClientInfo(String oldEmail, String newSurname, String newName) throws IncorrectEmail;
 
-    void deleteClient(String email, String password) throws IncorrectEmail;
+    void deleteClient(String email) throws IncorrectEmail;
 
-    void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus;
+    void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus, DateParseException;
 
-    void cancelReserveRoom(Long idRoom);
+    boolean cancelReserveRoom(Long idRoom);
 
     boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword;
 
     List<Client> getAllClient();
 
-    Client getCurrentClient(Long id) throws IncorrectEmail;
+    Client getCurrentClient();
 
     Hotel getHotelByID(Long id) throws NotFoundEntityForThisCriteria;
 
@@ -50,5 +53,8 @@ public interface API {
     List<Hotel> findRoomByHotel(String hotelName) throws NotFoundEntityForThisCriteria;
 
     boolean showRoomList(Hotel hotel) throws NotFoundEntityForThisCriteria;
+
+    void showCityNames() throws NotFoundEntityForThisCriteria;
+
 
 }

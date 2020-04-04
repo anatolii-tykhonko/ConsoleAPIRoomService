@@ -47,29 +47,28 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public void deleteClient(String email, String password) throws IncorrectEmail {
+    public void deleteClient(String email) throws IncorrectEmail {
         Client client;
         try {
             client = clientDAO.getByEmail(email);
         } catch (IndexOutOfBoundsException e) {
             throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
         }
-        if (password.equals(client.getPassword())) {
-            Long id = client.getId();
-            clientDAO.remove(id);
-        }
+        Long id = client.getId();
+        clientDAO.remove(id);
+
     }
 
     @Override
-    public void reserveRoom(Long idClient, Long idRoom, String reserveDate) throws InvalidRoomStatus {
+    public void reserveRoom(Long idClient, Long idRoom, LocalDate reserveDate) throws InvalidRoomStatus {
         Room room = roomDAO.get(idRoom);
         //default value set false
-        if(room.getStatus()){
+        if (room.getStatus()) {
             throw new InvalidRoomStatus("Эта комната сейчас занята.\n");
         }
         LocalDate reserve = room.getAvailableFrom();
-        if(reserve.compareTo(LocalDate.parse(reserveDate)) <= 0){
-            clientDAO.reserveRoom(idClient, idRoom, LocalDate.parse(reserveDate));
+        if (reserve.compareTo((reserveDate)) <= 0) {
+            clientDAO.reserveRoom(idClient, idRoom, reserveDate);
         } else throw new InvalidRoomStatus("На данную дату комната занята.\n");
     }
 
@@ -98,12 +97,12 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public Client getCurrentClient(Long id) throws IncorrectEmail {
+    public Client getClientById(Long id) throws IncorrectEmail {
         Client client;
         try {
             client = clientDAO.get(id);
         } catch (IndexOutOfBoundsException e) {
-            throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
+            throw new IncorrectEmail("Клиента не существует! Повторите ввод!\n");
         }
         return client;
     }
