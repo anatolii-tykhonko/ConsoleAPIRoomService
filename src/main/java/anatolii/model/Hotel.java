@@ -51,11 +51,9 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return "Hotel{" +
-                "id=" + id +
+        return "ID= " + id +
                 ", hotelName='" + hotelName + '\'' +
-                ", cityName='" + cityName + '\'' +
-                '}';
+                ", cityName='" + cityName + '\'';
     }
 
     @Override

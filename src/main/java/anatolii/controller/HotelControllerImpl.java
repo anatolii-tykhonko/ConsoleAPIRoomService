@@ -20,11 +20,20 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
+    public Hotel getHotelByID(Long id) throws NotFoundEntityForThisCriteria {
+        Hotel hotel = hotelDAO.get(id);
+        if(hotel == null){
+            throw new NotFoundEntityForThisCriteria("Вы ввели неверный номер отеля.\n");
+        }
+        return hotel;
+    }
+
+    @Override
     public void addHotel(String hotelName, String cityName) throws HotelAlreadyExist {
         List<Hotel> hotels = hotelDAO.findHotelByName(hotelName).stream().
                 filter(hotel -> hotel.getCityName().equals(cityName)).collect(Collectors.toList());
         if(!hotels.isEmpty()){
-            throw new HotelAlreadyExist("Отель с таким названием присутствует в даном городе.\n");
+            throw new HotelAlreadyExist("Отель с таким названием отствует в даном городе.\n");
         }
         Hotel hotel = new Hotel();
         hotel.setHotelName(hotelName);
@@ -71,8 +80,11 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
-    public List<Hotel> getHotels() {
+    public List<Hotel> getHotels() throws NotFoundEntityForThisCriteria {
         List<Hotel> hotels = hotelDAO.getAll();
+        if(hotels.isEmpty()){
+            throw new NotFoundEntityForThisCriteria("Отели отсутствуют в базе.\n");
+        }
         return hotels;
     }
 }

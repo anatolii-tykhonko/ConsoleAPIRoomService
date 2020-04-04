@@ -19,7 +19,7 @@ public class RoomControllerImpl implements RoomController {
         this.hotelDAO = hotelDAO;
     }
     @Override
-    public void addRoom(Long hotelId, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
+    public void addRoom(Long hotelId, Integer person, BigDecimal price, LocalDate date) throws NotFoundEntityForThisCriteria {
         Room room = new Room();
         try {
             room.setHotel(hotelDAO.get(hotelId));
@@ -28,19 +28,19 @@ public class RoomControllerImpl implements RoomController {
         }
         room.setPersons(person);
         room.setPrice(price);
-        room.setAvailableFrom(LocalDate.parse(date));
+        room.setAvailableFrom(date);
         roomDAO.save(room);
     }
 
     @Override
-    public void editRoomDetails(Long roomId, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria {
+    public void editRoomDetails(Long roomId, Integer person, BigDecimal price, LocalDate date) throws NotFoundEntityForThisCriteria {
         Room room = roomDAO.get(roomId);
         if(room == null){
             throw new NotFoundEntityForThisCriteria("Комната с даным ID отсутствует в списке.\n");
         }
         room.setPersons(person);
         room.setPrice(price);
-        room.setAvailableFrom(LocalDate.parse(date));
+        room.setAvailableFrom(date);
         roomDAO.update(room);
     }
 

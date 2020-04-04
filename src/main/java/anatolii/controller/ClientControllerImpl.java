@@ -98,10 +98,10 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public Client getCurrentClient(String email) throws IncorrectEmail {
+    public Client getCurrentClient(Long id) throws IncorrectEmail {
         Client client;
         try {
-            client = clientDAO.getByEmail(email);
+            client = clientDAO.get(id);
         } catch (IndexOutOfBoundsException e) {
             throw new IncorrectEmail("Клиента с таким email не существует! Повторите ввод!\n");
         }

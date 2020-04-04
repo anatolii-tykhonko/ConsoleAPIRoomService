@@ -16,7 +16,7 @@ public interface ClientController {
     void cancelReserveRoom(Long idRoom);
     boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword;
     List<Client> getAllClient();
-    Client getCurrentClient(String email) throws IncorrectEmail;
+    Client getCurrentClient(Long id) throws IncorrectEmail;
 
 
 }

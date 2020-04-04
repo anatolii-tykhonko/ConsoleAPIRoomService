@@ -23,7 +23,9 @@ public interface API {
 
     List<Client> getAllClient();
 
-    Client getCurrentClient(String email) throws IncorrectEmail;
+    Client getCurrentClient(Long id) throws IncorrectEmail;
+
+    Hotel getHotelByID(Long id) throws NotFoundEntityForThisCriteria;
 
     void addHotel(String hotelName, String cityName) throws HotelAlreadyExist;
 
@@ -35,14 +37,18 @@ public interface API {
 
     List<Hotel> findHotelByCity(String cityName) throws NotFoundEntityForThisCriteria;
 
-    List<Hotel> getHotels();
+    List<Hotel> getHotels() throws NotFoundEntityForThisCriteria;
 
-    void addRoom(Long hotelID, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria;
+    boolean showHotelList() throws NotFoundEntityForThisCriteria;
 
-    void editRoomDetails(Long roomID, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria;
+    void addRoom(Long hotelID, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria, DateParseException;
+
+    void editRoomDetails(Long roomID, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria, DateParseException;
 
     void deleteRoom(Long id);
 
     List<Hotel> findRoomByHotel(String hotelName) throws NotFoundEntityForThisCriteria;
+
+    boolean showRoomList(Hotel hotel) throws NotFoundEntityForThisCriteria;
 
 }
