@@ -94,8 +94,8 @@ public class Application implements API {
     }
 
     @Override
-    public void editHotelDetails(Long id, String hotelName, String cityName, Room... room) {
-        hotelController.editHotelDetails(id, hotelName, cityName, room);
+    public void editHotelDetails(Long id, String hotelName, String cityName) {
+        hotelController.editHotelDetails(id, hotelName, cityName);
     }
 
     @Override
@@ -120,8 +120,13 @@ public class Application implements API {
 
     @Override
     public boolean showHotelList() throws NotFoundEntityForThisCriteria {
-        hotelController.getHotels().stream().forEach(System.out::println);
-        return true;
+        List<Hotel> hotels = hotelController.getHotels();
+        if(hotels.isEmpty()){
+            return false;
+        } else {
+            hotels.stream().forEach(System.out::println);
+            return true;
+        }
     }
 
     @Override

@@ -32,7 +32,7 @@ public interface API {
 
     void addHotel(String hotelName, String cityName) throws HotelAlreadyExist;
 
-    void editHotelDetails(Long id, String hotelName, String cityName, Room... room);
+    void editHotelDetails(Long id, String hotelName, String cityName);
 
     void deleteHotel(Long id);
 

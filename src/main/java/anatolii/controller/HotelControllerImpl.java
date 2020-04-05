@@ -4,11 +4,9 @@ import anatolii.dao.HotelDAO;
 import anatolii.exception.HotelAlreadyExist;
 import anatolii.exception.NotFoundEntityForThisCriteria;
 import anatolii.model.Hotel;
-import anatolii.model.Room;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HotelControllerImpl implements HotelController {
@@ -42,15 +40,8 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
-    public void editHotelDetails(Long id, String hotelName, String cityName, Room ... room) {
+    public void editHotelDetails(Long id, String hotelName, String cityName) {
         Hotel hotel = hotelDAO.get(id);
-        if (room.length != 0) {
-            Set<Room> rooms = new HashSet<>();
-            for (int i = 0; i < room.length; i++) {
-                rooms.add(room[i]);
-            }
-            hotel.setRoomList(rooms);
-        }
         hotel.setHotelName(hotelName);
         hotel.setCityName(cityName);
         hotelDAO.update(hotel);

@@ -369,7 +369,7 @@ public class ConsoleHelper {
     private void editHotelInfo() {
         while (true) {
             try {
-                if (application.showHotelList()) {
+                if (!application.showHotelList()) {
                     System.out.println("В базе нет отелей, сначала необходимо создать отель!");
                     return;
                 }
@@ -680,7 +680,7 @@ public class ConsoleHelper {
                 String cityName = buffRead.readLine();
                 if (cityName.equals("0")) return;
                 List<Hotel> hotelByCity = application.findHotelByCity(cityName);
-                System.out.println("По заданым критериям поиска доступны следующие отели: ");
+//                System.out.println("По заданым критериям поиска доступны следующие отели: ");
                 for (Hotel hotel : hotelByCity) {
                     System.out.println("*----------------------------------------------------------*");
                     System.out.println("Название отеля: " + hotel.getHotelName() + ";" + "\n" +
@@ -705,38 +705,34 @@ public class ConsoleHelper {
     }
 
     private void findRoomsByHotel() {
-        while (true) {
-            System.out.println("*----------------------------------------------*");
-            System.out.println("В системе имеются следующие отели: ");
-            try {
-                application.showHotelList();
-                System.out.println("Введите номер, который соответствует названию отеля. Введите 0, если желаете вернуться в главное меню. ");
-                Long hotelId = Long.parseLong(buffRead.readLine());
-                if (hotelId == 0) return;
-                Hotel selectHotel = application.getHotelByID(hotelId);
-                Set<Room> rooms = selectHotel.getRoomList();
-                for (Room room : rooms) {
+        System.out.println("*----------------------------------------------*");
+        System.out.println("В системе имеются следующие отели: ");
+        try {
+            application.showHotelList();
+            System.out.println("Введите номер, который соответствует названию отеля. Введите 0, если желаете вернуться в главное меню. ");
+            Long hotelId = Long.parseLong(buffRead.readLine());
+            if (hotelId == 0) userChooseTheOperation();
+            Hotel selectHotel = application.getHotelByID(hotelId);
+            List<Room> rooms = selectHotel.getRoomList();
+            for (Room room : rooms) {
 
-                    System.out.println("*----------------------------------------------------------*");
-                    System.out.println(room);
-                    System.out.println("*----------------------------------------------------------*");
+                System.out.println("*----------------------------------------------------------*");
+                System.out.println(room);
+                System.out.println("*----------------------------------------------------------*");
 
-                }
-                System.out.println("Для продолжения поиска комнат по названию отеля нажмите 1, в противном случае Вы перейдете в главное меню");
-                String answer1 = buffRead.readLine();
-                switch (answer1) {
-                    case "1":
-                        continue;
-                    default:
-                        return;
-                }
-            } catch (IndexOutOfBoundsException | NumberFormatException e) {
-                System.out.println("Вы ввели недопустимые символы,повторите Ваш ввод");
-            } catch (NotFoundEntityForThisCriteria e) {
-                System.out.println(e.getMessage());
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            System.out.println("Для продолжения поиска комнат по названию отеля нажмите 1, в противном случае Вы перейдете в главное меню");
+            String answer1 = buffRead.readLine();
+            if ("1".equals(answer1)) {
+                findRoomsByHotel();
+            }
+            userChooseTheOperation();
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println("Вы ввели недопустимые символы,повторите Ваш ввод");
+        } catch (NotFoundEntityForThisCriteria e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -838,7 +834,7 @@ public class ConsoleHelper {
 
     private void cancelReservation() {
         while (true) {
-            Set<Room> userRooms = application.getCurrentClient().getRoomList();
+            List<Room> userRooms = application.getCurrentClient().getRoomList();
             System.out.println("Комнаты которые вы забронировали:");
             if (userRooms.isEmpty()) System.out.println("У ВАС НЕТ ЗАБРОНИРОВАНЫХ КОМНАТ!!!");
             for (Room room : userRooms) {

@@ -25,7 +25,7 @@ public class Room {
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
     @Column(name ="isReserve")
-    private Boolean status;
+    private Boolean status = false;
 
     public Room() {
     }

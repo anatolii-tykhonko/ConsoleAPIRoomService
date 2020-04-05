@@ -13,7 +13,7 @@ public class Client {
     private String email;
     private String password;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private Set<Room> roomList = new HashSet<>();
+    private List<Room> roomList = new ArrayList<>();
 
 
     public Client() {
@@ -59,11 +59,11 @@ public class Client {
         this.password = password;
     }
 
-    public Set<Room> getRoomList() {
+    public List<Room> getRoomList() {
         return roomList;
     }
 
-    public void setRoomList(Set<Room> roomList) {
+    public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
     }
 

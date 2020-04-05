@@ -22,15 +22,25 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
+    public Client getById(Long id) {
+        Client client = clientDAO.get(id);
+        return client;
+    }
+
+    @Override
     public void registerClient(String name, String surname, String email, String password) throws ClientAlreadyExist {
-        if (!email.equals(clientDAO.getByEmail("email"))) {
-            Client client = new Client();
-            client.setName(name);
-            client.setSurname(surname);
-            client.setEmail(email);
-            client.setPassword(password);
-            clientDAO.save(client);
-        } else throw new ClientAlreadyExist("Клиент с таким email уже существует! Повторите ввод!\n");
+        Client client;
+        try {
+            client = clientDAO.getByEmail(email);
+            throw new ClientAlreadyExist("Клиент с таким email уже существует! Повторите ввод!\n");
+        } catch (IndexOutOfBoundsException e) {
+        }
+        client = new Client();
+        client.setName(name);
+        client.setSurname(surname);
+        client.setEmail(email);
+        client.setPassword(password);
+        clientDAO.save(client);
     }
 
     @Override

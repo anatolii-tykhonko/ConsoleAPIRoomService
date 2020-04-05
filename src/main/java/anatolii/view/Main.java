@@ -9,6 +9,7 @@ import anatolii.dao.RoomDAO;
 import anatolii.dao.hibernate.HibernateClientDAOImpl;
 import anatolii.dao.hibernate.HibernateHotelDAOImpl;
 import anatolii.dao.hibernate.HibernateRoomDAOImpl;
+import anatolii.exception.NotFoundEntityForThisCriteria;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,7 +24,11 @@ public class Main {
         Application api = new Application(clientController, hotelController, roomController);
 
         ConsoleHelper consoleHelper = new ConsoleHelper(api);
-
+//        try {
+//            api.showHotelList();
+//        } catch (NotFoundEntityForThisCriteria e) {
+//            System.out.println(e.getMessage());
+//        }
         consoleHelper.loginService();
     }
 }

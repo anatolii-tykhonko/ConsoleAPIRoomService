@@ -3,6 +3,7 @@ package anatolii.dao.hibernate;
 import anatolii.dao.ClientDAO;
 import anatolii.model.Client;
 import anatolii.model.Room;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -31,6 +32,7 @@ public class HibernateClientDAOImpl implements ClientDAO {
     public Client get(Long id) {
         Session session = this.sessionFactory.openSession();
         Client client = session.get(Client.class, id);
+        Hibernate.initialize(client.getRoomList());
         session.close();
         return client;
     }

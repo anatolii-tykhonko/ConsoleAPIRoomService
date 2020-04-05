@@ -12,7 +12,7 @@ public class Hotel {
     @Column(name = "cityName")
     private String cityName;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Room> roomList = new HashSet<>();
+    private List<Room> roomList = new ArrayList<>();
 
     public Hotel(){}
 
@@ -40,11 +40,11 @@ public class Hotel {
         this.cityName = cityName;
     }
 
-    public Set<Room> getRoomList() {
+    public List<Room> getRoomList() {
         return roomList;
     }
 
-    public void setRoomList(Set<Room> roomList) {
+    public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
     }
 

@@ -18,6 +18,7 @@ public interface ClientController {
     boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword;
     List<Client> getAllClient();
     Client getClientById(Long id) throws IncorrectEmail;
+    Client getById(Long id);
 
 
 }

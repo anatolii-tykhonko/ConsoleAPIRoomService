@@ -2,6 +2,7 @@ package anatolii.dao.hibernate;
 
 import anatolii.dao.HotelDAO;
 import anatolii.model.Hotel;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -26,6 +27,7 @@ public class HibernateHotelDAOImpl implements HotelDAO {
     public Hotel get(Long id) {
         Session session = this.sessionFactory.openSession();
         Hotel hotel = session.get(Hotel.class, id);
+        Hibernate.initialize(hotel.getRoomList());
         session.close();
         return hotel;
     }
