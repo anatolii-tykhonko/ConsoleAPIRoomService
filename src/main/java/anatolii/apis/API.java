@@ -48,7 +48,7 @@ public interface API {
 
     void editRoomDetails(Long roomID, Integer person, BigDecimal price, String date) throws NotFoundEntityForThisCriteria, DateParseException;
 
-    void deleteRoom(Long id);
+    void deleteRoom(Long id) throws NotFoundEntityForThisCriteria;
 
     List<Hotel> findRoomByHotel(String hotelName) throws NotFoundEntityForThisCriteria;
 

@@ -10,6 +10,7 @@ import anatolii.model.Room;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -152,7 +153,7 @@ public class Application implements API {
     }
 
     @Override
-    public void deleteRoom(Long id) {
+    public void deleteRoom(Long id) throws NotFoundEntityForThisCriteria {
         roomController.deleteRoom(id);
     }
 
@@ -172,7 +173,7 @@ public class Application implements API {
 
     @Override
     public void showCityNames() throws NotFoundEntityForThisCriteria {
-        Set<String> allCity = new HashSet<>();
+        List<String> allCity = new ArrayList<>();
         hotelController.getHotels().stream().forEach(hotel -> allCity.add(hotel.getCityName()));
         allCity.forEach(System.out::println);
     }

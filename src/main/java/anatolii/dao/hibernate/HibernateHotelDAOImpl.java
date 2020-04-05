@@ -78,6 +78,7 @@ public class HibernateHotelDAOImpl implements HotelDAO {
         Query query = session.createQuery("FROM Hotel h WHERE h.cityName = :cityName");
         query.setParameter("cityName", cityName);
         List<Hotel> hotelsByCity = query.list();
+        hotelsByCity.forEach(hotel -> Hibernate.initialize(hotel.getRoomList()));
         session.close();
         return hotelsByCity;
     }

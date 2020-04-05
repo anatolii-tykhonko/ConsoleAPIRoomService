@@ -45,7 +45,15 @@ public class RoomControllerImpl implements RoomController {
     }
 
     @Override
-    public void deleteRoom(Long id) {
+    public void deleteRoom(Long id) throws NotFoundEntityForThisCriteria {
+        try {
+            Room room = roomDAO.get(id);
+            if(room == null){
+                throw new NotFoundEntityForThisCriteria("Комната с даным ID отсутствует в списке.\n");
+            }
+        } catch (Exception e){
+            throw new NotFoundEntityForThisCriteria("Комната с даным ID отсутствует в списке.\n");
+        }
         roomDAO.remove(id);
     }
 

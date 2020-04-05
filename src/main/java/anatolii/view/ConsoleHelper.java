@@ -348,6 +348,7 @@ public class ConsoleHelper {
                 Long roomID = Long.parseLong(buffRead.readLine());
                 application.deleteRoom(roomID);
                 System.out.println("**** Новый список комнат в отеле " + hotel.getHotelName() + " ****");
+                hotel = application.getHotelByID(hotelID);
                 application.showRoomList(hotel);
                 System.out.println("\nДля повторного удаления комнаты нажмите 1, в противном случае Вы перейдете в главное меню");
                 String answer1 = buffRead.readLine();
@@ -358,7 +359,7 @@ public class ConsoleHelper {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NotFoundEntityForThisCriteria e) {
-                System.out.println("Неправильная операция, выберите существующий номер из списка: ");
+                System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println("Неверный формат данных, введите даные повторно: ");
             }
@@ -405,9 +406,10 @@ public class ConsoleHelper {
     private void editUserInfo() {
         while (true) {
             System.out.println("Список пользователей в системе: ");
-            application.getAllClient();
+            List<Client> clients = application.getAllClient();
+            clients.forEach(System.out::println);
             try {
-                System.out.println("Введите номер пользователя которого вы хотите редактировать. Для выхода введите \"0\"!");
+                System.out.println("\nВведите номер пользователя которого вы хотите редактировать. Для выхода введите \"0\"!");
                 Long clientID = Long.parseLong(buffRead.readLine());
                 if (clientID == 0) return;
                 String oldEmail = application.getClientById(clientID).getEmail();
@@ -442,7 +444,7 @@ public class ConsoleHelper {
         while (true) {
             System.out.println("***** Список отелей в системе *****");
             try {
-                if (application.showHotelList()) {
+                if (!application.showHotelList()) {
                     System.out.println("\nВ системе не создано ни одного отеля, сначала добавьте отель в систему!\n");
                     return;
                 }
@@ -475,8 +477,8 @@ public class ConsoleHelper {
                 System.out.println("Укажите дату когда номер будет доступен в формате year-mm-dd");
                 String dateAvailableFrom = buffRead.readLine();
                 application.editRoomDetails(roomId, roomPersons, roomPrice, dateAvailableFrom);
-                System.out.println("Комната после введеных изменений: \n" + room);
-                System.out.println("\nДля повторного добавления отеля нажмите 1, в противном случае Вы перейдете в главное меню");
+                System.out.println("Изменения удачно сохранены!\n");
+                System.out.println("\nДля повторного редактирования комнаты нажмите 1, в противном случае Вы перейдете в главное меню");
                 String answer1 = buffRead.readLine();
                 if ("1".equals(answer1)) {
                     continue;
@@ -644,15 +646,16 @@ public class ConsoleHelper {
                 System.out.println("Введите номер, который соответствует названию отеля. Введите 0, если желаете вернуться в главное меню. ");
                 Long hotelId = Long.parseLong(buffRead.readLine());
                 if (hotelId == 0) return;
-                String hotelName = application.getHotelByID(hotelId).getHotelName();
-                List<Hotel> hotelByName = application.findHotelByName(hotelName);
-                for (Hotel hotel : hotelByName) {
-                    System.out.println("*-----------------------------------------------------------*");
-                    System.out.println("Название отеля: " + hotel.getHotelName() + ";" + "\n" +
-                            "Местонахождение отеля: " + hotel.getCityName() + ";" + "\n" + "Доступные комнаты: ");
+                Hotel hotel = application.getHotelByID(hotelId);
+                System.out.println("*-----------------------------------------------------------*");
+                System.out.println("Название отеля: " + hotel.getHotelName() + ";" + "\n" +
+                        "Местонахождение отеля: " + hotel.getCityName() + ";" + "\n" + "Доступные комнаты: ");
+                if (hotel.getRoomList().isEmpty()) {
+                    System.out.println("Свободных комнат нет");
+                } else {
                     hotel.getRoomList().forEach(System.out::println);
-                    System.out.println("*-----------------------------------------------------------*");
                 }
+                System.out.println("*-----------------------------------------------------------*");
                 System.out.println("Для продолжения поиска отеля по названию нажмите 1, в противном случае Вы перейдете в главное меню");
                 String answer1 = buffRead.readLine();
                 if ("1".equals(answer1)) {
@@ -680,7 +683,6 @@ public class ConsoleHelper {
                 String cityName = buffRead.readLine();
                 if (cityName.equals("0")) return;
                 List<Hotel> hotelByCity = application.findHotelByCity(cityName);
-//                System.out.println("По заданым критериям поиска доступны следующие отели: ");
                 for (Hotel hotel : hotelByCity) {
                     System.out.println("*----------------------------------------------------------*");
                     System.out.println("Название отеля: " + hotel.getHotelName() + ";" + "\n" +
@@ -759,22 +761,21 @@ public class ConsoleHelper {
                             o1.get(hotel.getHotelName()).add(room);
                         }
                     }
-
                 }
+                int count = 0;
                 for (Map.Entry<String, List<Room>> pair : o1.entrySet()) {
-
-                    if (pair.getValue().isEmpty()) {
-                        System.out.println("По заданым критериям комнаты отсутствуют.");
-                        continue;
+                    if (!pair.getValue().isEmpty()) {
+                        System.out.println("*---------------------------------------------------------------*");
+                        System.out.println("Название отеля: " + pair.getKey() + "\n" +
+                                "Доступные комнаты: ");
+                        for (int i = 0; i < pair.getValue().size(); i++) {
+                            System.out.println((i + 1) + ". " + pair.getValue().get(i));
+                        }
+                        System.out.println("*---------------------------------------------------------------*");
+                        count++;
                     }
-                    System.out.println("*---------------------------------------------------------------*");
-                    System.out.println("Название отеля: " + pair.getKey() + "\n" +
-                            "Доступные комнаты: ");
-                    for (int i = 0; i < pair.getValue().size(); i++) {
-                        System.out.println((i + 1) + ". " + pair.getValue().get(i));
-                    }
-                    System.out.println("*---------------------------------------------------------------*");
                 }
+                if(count == 0) System.out.println("По заданым критериям комнаты отсутствуют.");
                 System.out.println("\nДля продолжения поиска нажмите 1, в противном случае Вы перейдете в главное меню");
                 String answer1 = buffRead.readLine();
                 switch (answer1) {
@@ -795,7 +796,7 @@ public class ConsoleHelper {
 
     private void reservationRoom() {
         while (true) {
-            System.out.println("Виберете отель в которогм вы хотите забронировать комануту: \n");
+            System.out.println("Выберете отель в котором вы хотите забронировать комануту: \n");
             try {
                 application.showHotelList();
                 System.out.println("\nУкажите номер отеля в котором вы хотите забронировать комнату! Для выхода введите \"0\"!");
@@ -821,7 +822,7 @@ public class ConsoleHelper {
                 }
             } catch (InvalidRoomStatus | NotFoundEntityForThisCriteria invalidStatus) {
                 System.out.println(invalidStatus.getMessage());
-            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+            } catch (NumberFormatException ex) {
                 System.out.println("Не верная операция, повторите попытку!");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -834,22 +835,24 @@ public class ConsoleHelper {
 
     private void cancelReservation() {
         while (true) {
-            List<Room> userRooms = application.getCurrentClient().getRoomList();
-            System.out.println("Комнаты которые вы забронировали:");
-            if (userRooms.isEmpty()) System.out.println("У ВАС НЕТ ЗАБРОНИРОВАНЫХ КОМНАТ!!!");
-            for (Room room : userRooms) {
-                System.out.println(room);
-            }
             try {
+                Long clientId = application.getCurrentClient().getId();
+                List<Room> userRooms = application.getClientById(clientId).getRoomList();
+                System.out.println("Комнаты которые вы забронировали:");
+                if (userRooms.isEmpty()) System.out.println("У ВАС НЕТ ЗАБРОНИРОВАНЫХ КОМНАТ!!!");
+                for (Room room : userRooms) {
+                    System.out.println(room);
+                }
                 System.out.println("\nВведите номер комнаты с которой вы хотите снять бронь! Для выхода введите \"0\"!\n");
                 Long roomId = Long.parseLong(buffRead.readLine());
                 if (roomId == 0) return;
-
                 if (application.cancelReserveRoom(roomId)) {
                     System.out.println("   *** Операция успешная! Бронь отменена!\n");
                     return;
                 }
-            } catch (IndexOutOfBoundsException | NumberFormatException ex) {
+            } catch (IncorrectEmail e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException ex) {
                 System.out.println("Не верная операция, повторите попытку!");
             } catch (IOException e) {
                 e.printStackTrace();
