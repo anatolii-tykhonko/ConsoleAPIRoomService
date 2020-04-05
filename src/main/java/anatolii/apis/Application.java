@@ -36,7 +36,7 @@ public class Application implements API {
     @Override
     public void registerClient(String name, String surname, String email, String password) throws ClientAlreadyExist {
         clientController.registerClient(name, surname, email, password);
-        currentClient = clientController.getAllClient().stream().filter(email::equals).findFirst().get();
+        //currentClient = clientController.getAllClient().stream().filter(client -> client.getEmail().equals(email)).findFirst().get();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Application implements API {
     @Override
     public boolean loginClient(String email, String password) throws IncorrectEmail, IncorrectPassword {
         boolean resultLogin = clientController.loginClient(email, password);
-        currentClient = clientController.getAllClient().stream().filter(email::equals).findFirst().get();
+        currentClient = clientController.getAllClient().stream().filter(client -> client.getEmail().equals(email)).findFirst().get();
         return resultLogin;
     }
 

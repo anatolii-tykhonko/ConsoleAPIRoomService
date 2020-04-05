@@ -3,7 +3,6 @@ package anatolii.model;
 import javax.persistence.*;
 import java.util.*;
 @Entity
-@Table (name = "Hotels")
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +11,7 @@ public class Hotel {
     private String hotelName;
     @Column(name = "cityName")
     private String cityName;
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Room> roomList = new HashSet<>();
 
     public Hotel(){}

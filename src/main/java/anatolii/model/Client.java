@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "Clients")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +12,7 @@ public class Client {
     private String surname;
     private String email;
     private String password;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private Set<Room> roomList = new HashSet<>();
 
 
